@@ -29,6 +29,7 @@ jobs:
         run: |
           git clone https://github.com/immortalwrt/immortalwrt.git openwrt
           cd openwrt
+          cp ../feeds.conf.default feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
@@ -44,7 +45,8 @@ jobs:
           make -j$(nproc) V=s
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: OpenWrt-CudyTR3000
           path: openwrt/bin
+          retention-days: 7
